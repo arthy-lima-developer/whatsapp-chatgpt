@@ -56,18 +56,6 @@
       "isAdmin": false,
       "topics": [
         {
-          "timestamp": "2025-01-05T19:13:17.097Z",
-          "topic": "10/02"
-        },
-        {
-          "timestamp": "2025-01-05T19:13:33.207Z",
-          "topic": "Sim"
-        },
-        {
-          "timestamp": "2025-01-05T19:14:15.212Z",
-          "topic": "17:00"
-        },
-        {
           "timestamp": "2025-01-05T19:14:26.356Z",
           "topic": "Matheus"
         },
@@ -94,6 +82,18 @@
         {
           "timestamp": "2025-01-05T19:23:56.513Z",
           "topic": "💲"
+        },
+        {
+          "timestamp": "2025-01-05T19:25:40.054Z",
+          "topic": "Vai"
+        },
+        {
+          "timestamp": "2025-01-05T19:25:43.094Z",
+          "topic": "Para"
+        },
+        {
+          "timestamp": "2025-01-05T19:25:45.036Z",
+          "topic": "Cada"
         }
       ],
       "adminNotes": [],
@@ -160,6 +160,54 @@
         {
           "timestamp": "2025-01-05T18:59:41.565Z",
           "topic": "Tá bem"
+        }
+      ],
+      "adminNotes": [],
+      "context": {},
+      "conversationFlow": {
+        "currentStep": "confirming"
+      }
+    },
+    "558592211383@c.us": {
+      "phone": "558592211383@c.us",
+      "lastInteraction": "2025-01-05T19:29:15.141Z",
+      "isAdmin": false,
+      "topics": [
+        {
+          "timestamp": "2025-01-05T19:29:15.238Z",
+          "topic": "Kkkkk"
+        },
+        {
+          "timestamp": "2025-01-05T19:29:31.436Z",
+          "topic": "Kkkkkkkkkk"
+        },
+        {
+          "timestamp": "2025-01-05T19:29:52.628Z",
+          "topic": "Sim"
+        },
+        {
+          "timestamp": "2025-01-05T19:30:13.746Z",
+          "topic": "Bruno Lima Ferreira"
+        },
+        {
+          "timestamp": "2025-01-05T19:30:30.746Z",
+          "topic": "Lucas"
+        },
+        {
+          "timestamp": "2025-01-05T19:30:59.964Z",
+          "topic": "17"
+        },
+        {
+          "timestamp": "2025-01-05T19:31:18.185Z",
+          "topic": "Quinta"
+        },
+        {
+          "timestamp": "2025-01-05T19:31:36.925Z",
+          "topic": "Obrigado"
+        },
+        {
+          "timestamp": "2025-01-05T19:31:55.960Z",
+          "topic": "Para vc também"
         }
       ],
       "adminNotes": [],
