@@ -83,6 +83,7 @@ const start = async () => {
 
 		// Set bot ready timestamp
 		botReadyTimestamp = new Date();
+		cli.print(`[STARTUP] Bot iniciado em: ${botReadyTimestamp.toLocaleString()}`);
 
 		initAiConfig();
 		initOpenAI();
@@ -90,11 +91,19 @@ const start = async () => {
 
 	// WhatsApp message
 	client.on(Events.MESSAGE_RECEIVED, async (message: any) => {
+		// Ignore messages from before bot startup
+		const messageTimestamp = new Date(message.timestamp * 1000); // Convert Unix timestamp to Date
+		if (botReadyTimestamp && messageTimestamp < botReadyTimestamp) {
+			cli.print(`[STARTUP] Ignorando mensagem antiga de ${message.from} | "${message.body}" | ${messageTimestamp.toLocaleString()}`);
+			return;
+		}
+
 		// Debug log para entender o fluxo da mensagem
 		console.log('\n[DEBUG] Nova mensagem recebida:', {
 			de: message.from,
 			para: message.to,
-			conteudo: message.body
+			conteudo: message.body,
+			timestamp: messageTimestamp.toLocaleString()
 		});
 
 		// Ignore if message is from status broadcast
@@ -115,6 +124,13 @@ const start = async () => {
 
 	// Reply to own message
 	client.on(Events.MESSAGE_CREATE, async (message: Message) => {
+		// Ignore messages from before bot startup
+		const messageTimestamp = new Date(message.timestamp * 1000); // Convert Unix timestamp to Date
+		if (botReadyTimestamp && messageTimestamp < botReadyTimestamp) {
+			cli.print(`[STARTUP] Ignorando mensagem antiga de ${message.from} | "${message.body}" | ${messageTimestamp.toLocaleString()}`);
+			return;
+		}
+
 		// Ignore if message is from status broadcast
 		if (message.from == constants.statusBroadcast) return;
 

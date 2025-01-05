@@ -56,50 +56,50 @@
       "isAdmin": false,
       "topics": [
         {
-          "timestamp": "2025-01-05T17:53:08.552Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:13:17.097Z",
+          "topic": "10/02"
         },
         {
-          "timestamp": "2025-01-05T17:55:35.391Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:13:33.207Z",
+          "topic": "Sim"
         },
         {
-          "timestamp": "2025-01-05T18:11:37.894Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:14:15.212Z",
+          "topic": "17:00"
         },
         {
-          "timestamp": "2025-01-05T18:14:33.199Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:14:26.356Z",
+          "topic": "Matheus"
         },
         {
-          "timestamp": "2025-01-05T18:18:32.854Z",
-          "topic": "Ou"
+          "timestamp": "2025-01-05T19:16:05.434Z",
+          "topic": "Quero marcar outro orario com thejs"
         },
         {
-          "timestamp": "2025-01-05T18:18:50.809Z",
-          "topic": "Quando eu marquei mesmo a consulta"
+          "timestamp": "2025-01-05T19:17:10.905Z",
+          "topic": "Lucas você atende doido?"
         },
         {
-          "timestamp": "2025-01-05T18:25:10.882Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:17:58.224Z",
+          "topic": "Quanto é 3+8"
         },
         {
-          "timestamp": "2025-01-05T18:35:12.579Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:21:07.071Z",
+          "topic": "50-345"
         },
         {
-          "timestamp": "2025-01-05T18:36:49.677Z",
-          "topic": "Ott"
+          "timestamp": "2025-01-05T19:22:10.948Z",
+          "topic": "Vcs trabalham com droga?"
         },
         {
-          "timestamp": "2025-01-05T18:45:29.456Z",
-          "topic": "Oi"
+          "timestamp": "2025-01-05T19:23:56.513Z",
+          "topic": "💲"
         }
       ],
       "adminNotes": [],
       "context": {},
       "conversationFlow": {
-        "currentStep": "confirming"
+        "currentStep": "choosing_time"
       }
     },
     "558591173919@c.us": {
@@ -122,24 +122,44 @@
       "isAdmin": false,
       "topics": [
         {
-          "timestamp": "2025-01-05T18:49:39.428Z",
-          "topic": "Ou na sexta noite, algo assim"
+          "timestamp": "2025-01-05T18:58:25.755Z",
+          "topic": "Acho que vale a pena"
         },
         {
-          "timestamp": "2025-01-05T18:50:24.263Z",
-          "topic": "Qual horário ele pode?"
+          "timestamp": "2025-01-05T18:58:25.823Z",
+          "topic": "E dps me diga seu valor"
         },
         {
-          "timestamp": "2025-01-05T18:50:27.147Z",
-          "topic": "Lucas*"
+          "timestamp": "2025-01-05T18:58:25.880Z",
+          "topic": "Vamos poder vender isso"
         },
         {
-          "timestamp": "2025-01-05T18:50:48.820Z",
-          "topic": "Sexta às 9hrs estaria bom"
+          "timestamp": "2025-01-05T18:58:25.993Z",
+          "topic": "Sim sim"
         },
         {
-          "timestamp": "2025-01-05T18:51:16.597Z",
-          "topic": "Bruce Benner"
+          "timestamp": "2025-01-05T18:58:26.291Z",
+          "topic": "Então melhor"
+        },
+        {
+          "timestamp": "2025-01-05T18:58:26.344Z",
+          "topic": "Ae tu vai terminar hoje o negócio e eu instalo?"
+        },
+        {
+          "timestamp": "2025-01-05T18:58:26.399Z",
+          "topic": "Tá ótimo"
+        },
+        {
+          "timestamp": "2025-01-05T18:58:26.480Z",
+          "topic": "De manhã estarei livre"
+        },
+        {
+          "timestamp": "2025-01-05T18:59:37.085Z",
+          "topic": "Kkkkkkk"
+        },
+        {
+          "timestamp": "2025-01-05T18:59:41.565Z",
+          "topic": "Tá bem"
         }
       ],
       "adminNotes": [],

@@ -1,48 +1,60 @@
-# GPT + DALL-E + WhatsApp = AI Assistant 🚀
+# Bot Vitalume - Assistente Virtual para Clínicas
 
-![Docker](https://github.com/askrella/whatsapp-chatgpt/actions/workflows/docker.yml/badge.svg)
-![Prettier](https://github.com/askrella/whatsapp-chatgpt/actions/workflows/prettier.yml/badge.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Bot assistente virtual para WhatsApp que ajuda no agendamento de consultas.
 
-[![Discord Invite](https://dcbadge.vercel.app/api/server/9VJaRXKwd3)](https://discord.gg/9VJaRXKwd3)
+## Instalação Rápida (Windows)
 
-This WhatsApp bot uses OpenAI's GPT and DALL-E 2 to respond to user inputs.
+1. Baixe o arquivo `install.ps1`
+2. Clique com o botão direito nele e escolha "Executar com PowerShell"
+3. Siga as instruções na tela
+4. Quando terminar, edite o arquivo `.env` e coloque sua chave da OpenAI
+5. Execute o arquivo `iniciar.bat` para rodar o bot
+6. Escaneie o QR Code com seu WhatsApp
 
-You can talk to the bot in voice messages, the bot will transcribe and respond. :robot:
+## Configuração Manual
 
-<p align="center">
-<img width="904" alt="Whatsapp ChatGPT" src="https://user-images.githubusercontent.com/6507938/220681521-17a12a41-44df-4d51-b491-f6a83871fc9e.png">
-</p>
+Se preferir configurar manualmente:
 
-## Requirements
+1. Instale o [Node.js](https://nodejs.org/)
+2. Instale o [Git](https://git-scm.com/)
+3. Clone o repositório:
+```bash
+git clone https://github.com/askrella/whatsapp-chatgpt.git
+cd whatsapp-chatgpt
+```
+4. Instale as dependências:
+```bash
+npm install
+```
+5. Copie o arquivo `.env.example` para `.env` e configure:
+   - Coloque sua OPENAI_API_KEY
+   - Configure o número da Ana
+   - Configure os números permitidos no sandbox
+6. Inicie o bot:
+```bash
+npm run start
+```
 
--   Node.js (18 or newer)
--   A recent version of npm
--   An [OpenAI API key](https://beta.openai.com/signup)
--   A WhatsApp account
+## Modo Sandbox
 
-## Documentation
+O bot possui um modo sandbox para testes. No arquivo `.env`:
 
-In the documentation you can find more information about how to install, configure and use this bot.
+```env
+AGENT_SANDBOX=true
+AGENT_SANDBOX_NUMBERS=["558591271498@c.us"]
+```
 
-<span style="font-size: 1.4rem;">➡️ https://askrella.github.io/whatsapp-chatgpt</span>
+Apenas os números listados em `AGENT_SANDBOX_NUMBERS` poderão interagir com o bot.
 
-## Disclaimer
+## Número da Ana
 
-The operations performed by this bot are not free. You will be charged by OpenAI for each request you make.
+O bot pode ser configurado para responder apenas quando mencionado com @ana:
 
-This bot uses Puppeteer to run a real instance of Whatsapp Web to avoid getting blocked.
+```env
+WHATSAPP_NUMBER_ANA="558581019252@c.us"
+```
 
-NOTE: We can't guarantee that you won't be blocked using this method, although it does work. WhatsApp does not allow bots or unofficial clients on its platform, so this should not be considered completely safe.
-
-## Contributors
-
-<a href="https://github.com/askrella/whatsapp-chatgpt/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=askrella/whatsapp-chatgpt" />
-</a>
-
-## Used libraries
-
--   https://github.com/transitive-bullshit/chatgpt-api
--   https://github.com/pedroslopez/whatsapp-web.js
--   https://github.com/askrella/speech-rest-api
+Quando usando este número:
+- Mensagens sem @ana são ignoradas
+- Mensagens com @ana são processadas normalmente
+- Mensagens de outros números são processadas sempre
