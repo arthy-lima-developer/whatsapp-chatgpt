@@ -12,6 +12,7 @@ import { handleMessageGPT, handleDeleteConversation } from "../handlers/gpt";
 import { handleMessageDALLE } from "../handlers/dalle";
 import { handleMessageAIConfig, getConfig, executeCommand } from "../handlers/ai-config";
 import { handleMessageLangChain } from "../handlers/langchain";
+import { getUserMemory } from "./memory";
 
 // Speech API & Whisper
 import { TranscriptionMode } from "../types/transcription-mode";
@@ -27,22 +28,28 @@ import { botReadyTimestamp } from "../index";
 async function handleIncomingMessage(message: Message) {
 	let messageString = message.body;
 
-	// Prevent handling old messages
-	if (message.timestamp != null) {
-		const messageTimestamp = new Date(message.timestamp * 1000);
+	// Verifica se a mensagem está relacionada ao número da Ana de alguma forma
+	const isAnaNumber = message.from === process.env.WHATSAPP_NUMBER_ANA;
+	const isManualFromAna = message.fromMe && (message.from === process.env.WHATSAPP_NUMBER_ANA || message.to === process.env.WHATSAPP_NUMBER_ANA);
 
-		// If startTimestamp is null, the bot is not ready yet
-		if (botReadyTimestamp == null) {
-			cli.print("Ignoring message because bot is not ready yet: " + messageString);
-			return;
-		}
-
-		// Ignore messages that are sent before the bot is started
-		if (messageTimestamp < botReadyTimestamp) {
-			cli.print("Ignoring old message: " + messageString);
-			return;
-		}
+	// Se for uma mensagem manual do número da Ana, ignora completamente
+	if (isManualFromAna) {
+		cli.print(`[NÚMERO DA ANA] Mensagem enviada manualmente por um humano usando o número: ${messageString}`);
+		return;
 	}
+
+	// Se for uma mensagem do número da Ana (não manual), precisa do @ana
+	if (isAnaNumber) {
+		if (!messageString.toLowerCase().includes('@ana')) {
+			cli.print(`[NÚMERO DA ANA] Mensagem recebida sem @ana (ignorando): ${messageString}`);
+			return;
+		}
+		cli.print(`[ANA BOT] Mensagem recebida com @ana (processando): ${messageString}`);
+		messageString = messageString.replace(/@ana/gi, '').trim();
+	}
+
+	// Get user memory and last conversation
+	const userMemory = getUserMemory(message.from);
 
 	// Ignore groupchats if disabled
 	if ((await message.getChat()).isGroup && !config.groupchatsEnabled) return;
@@ -57,6 +64,7 @@ async function handleIncomingMessage(message: Message) {
 			return;
 		}
 	}
+
 	// Transcribe audio
 	if (message.hasMedia) {
 		const media = await message.downloadMedia();
@@ -122,6 +130,22 @@ async function handleIncomingMessage(message: Message) {
 		return;
 	}
 
+	// If AI Agent mode is enabled and message doesn't start with any special command prefix
+	if (config.aiAgentMode && 
+		!startsWithIgnoreCase(messageString, config.resetPrefix) &&
+		!startsWithIgnoreCase(messageString, config.aiConfigPrefix) &&
+		!startsWithIgnoreCase(messageString, config.dallePrefix) &&
+		!startsWithIgnoreCase(messageString, config.stableDiffusionPrefix)) {
+		
+		// If message starts with !gpt, remove the prefix
+		if (startsWithIgnoreCase(messageString, config.gptPrefix)) {
+			messageString = messageString.substring(config.gptPrefix.length + 1);
+		}
+		
+		await handleMessageGPT(message, messageString);
+		return;
+	}
+
 	// Clear conversation context (!clear)
 	if (startsWithIgnoreCase(messageString, config.resetPrefix)) {
 		await handleDeleteConversation(message);
@@ -142,13 +166,6 @@ async function handleIncomingMessage(message: Message) {
 		return;
 	}
 
-	// GPT (!lang <prompt>)
-	if (startsWithIgnoreCase(messageString, config.langChainPrefix)) {
-		const prompt = messageString.substring(config.langChainPrefix.length + 1);
-		await handleMessageLangChain(message, prompt);
-		return;
-	}
-
 	// DALLE (!dalle <prompt>)
 	if (startsWithIgnoreCase(messageString, config.dallePrefix)) {
 		const prompt = messageString.substring(config.dallePrefix.length + 1);
@@ -163,8 +180,8 @@ async function handleIncomingMessage(message: Message) {
 		return;
 	}
 
-	// GPT (only <prompt>)
-	if (!config.prefixEnabled || (config.prefixSkippedForMe && selfNotedMessage)) {
+	// GPT (only <prompt>) - this is now handled by AI Agent mode above
+	if (!config.aiAgentMode && (!config.prefixEnabled || (config.prefixSkippedForMe && selfNotedMessage))) {
 		await handleMessageGPT(message, messageString);
 		return;
 	}

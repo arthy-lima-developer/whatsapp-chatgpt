@@ -5,8 +5,8 @@ import { TTSMode } from "./types/tts-mode";
 import { AWSPollyEngine } from "./types/aws-polly-engine";
 
 // Environment variables
-import dotenv from "dotenv";
-dotenv.config();
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
 
 // Config Interface
 interface IConfig {
@@ -54,6 +54,9 @@ interface IConfig {
 	transcriptionEnabled: boolean;
 	transcriptionMode: TranscriptionMode;
 	transcriptionLanguage: string;
+
+	// AI Agent Mode
+	aiAgentMode: boolean;
 }
 
 // Config
@@ -104,7 +107,10 @@ export const config: IConfig = {
 	// Transcription
 	transcriptionEnabled: getEnvBooleanWithDefault("TRANSCRIPTION_ENABLED", false), // Default: false
 	transcriptionMode: getEnvTranscriptionMode(), // Default: local
-	transcriptionLanguage: process.env.TRANSCRIPTION_LANGUAGE || "" // Default: null
+	transcriptionLanguage: process.env.TRANSCRIPTION_LANGUAGE || "", // Default: null
+
+	// AI Agent Mode
+	aiAgentMode: process.env.AI_AGENT_MODE === "true"
 };
 
 /**

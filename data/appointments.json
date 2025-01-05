@@ -1,0 +1,12 @@
+{
+  "appointments": [
+    {
+      "doctor": "Dr. Lucas (Psicólogo)",
+      "date": "2024-02-20",
+      "time": "14:00",
+      "patient": "Exemplo Paciente",
+      "phone": "5585999999999",
+      "status": "confirmado"
+    }
+  ]
+} 

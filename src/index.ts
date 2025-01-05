@@ -1,5 +1,6 @@
 import qrcode from "qrcode";
 import { Client, Message, Events, LocalAuth } from "whatsapp-web.js";
+import readline from 'readline';
 
 // Constants
 import constants from "./constants";
@@ -12,8 +13,41 @@ import { handleIncomingMessage } from "./handlers/message";
 import { initAiConfig } from "./handlers/ai-config";
 import { initOpenAI } from "./providers/openai";
 
+// Create interface for terminal input
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
 // Ready timestamp of the bot
-let botReadyTimestamp: Date | null = null;
+export let botReadyTimestamp: Date | null = null;
+
+// Handle terminal input
+function setupTerminalInput() {
+	rl.on('line', async (input) => {
+		if (input.trim()) {
+			// Criar um objeto Message simulado para entrada do terminal
+			const terminalMessage = {
+				from: 'sudo@master',
+				to: 'terminal',
+				body: input,
+				hasMedia: false,
+				timestamp: Date.now(),
+				fromMe: true,
+				hasQuotedMsg: false,
+				getChat: async () => ({ isGroup: false }),
+				reply: (text: string) => {
+					console.log('\n[RESPOSTA]:', text, '\n> ');
+					return Promise.resolve();
+				}
+			};
+
+			// Processar a mensagem
+			await handleIncomingMessage(terminalMessage as any);
+		}
+		process.stdout.write('> ');
+	});
+}
 
 // Entrypoint
 const start = async () => {
@@ -84,6 +118,9 @@ const start = async () => {
 		// Set bot ready timestamp
 		botReadyTimestamp = new Date();
 
+		// Setup terminal input
+		setupTerminalInput();
+
 		initAiConfig();
 		initOpenAI();
 	});
@@ -118,5 +155,3 @@ const start = async () => {
 };
 
 start();
-
-export { botReadyTimestamp };

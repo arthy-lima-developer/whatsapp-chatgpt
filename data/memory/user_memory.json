@@ -1,0 +1,98 @@
+{
+  "users": {
+    "558581019252@c.us": {
+      "phone": "558581019252@c.us",
+      "lastInteraction": "2025-01-05T17:20:16.180Z",
+      "isAdmin": false,
+      "topics": [
+        {
+          "timestamp": "2025-01-05T17:20:16.182Z",
+          "topic": "oi tudo bem"
+        },
+        {
+          "timestamp": "2025-01-05T17:20:31.192Z",
+          "topic": "queria marcar um horario para o lucas"
+        },
+        {
+          "timestamp": "2025-01-05T17:25:32.145Z",
+          "topic": "Oi ana"
+        },
+        {
+          "timestamp": "2025-01-05T17:25:47.087Z",
+          "topic": "Voce sabe quem esta falando eh seu chefe ou nao"
+        },
+        {
+          "timestamp": "2025-01-05T17:27:20.480Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T17:38:35.263Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T17:41:29.813Z",
+          "topic": "Hello"
+        },
+        {
+          "timestamp": "2025-01-05T17:43:18.470Z",
+          "topic": "Oi tudo bem"
+        },
+        {
+          "timestamp": "2025-01-05T17:45:41.650Z",
+          "topic": "tudo bem?"
+        }
+      ],
+      "adminNotes": [],
+      "context": {},
+      "conversationFlow": {}
+    },
+    "558591271498@c.us": {
+      "phone": "558591271498@c.us",
+      "lastInteraction": "2025-01-05T17:22:35.483Z",
+      "isAdmin": false,
+      "topics": [
+        {
+          "timestamp": "2025-01-05T17:22:35.486Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T17:22:49.688Z",
+          "topic": "Você eh lindo"
+        },
+        {
+          "timestamp": "2025-01-05T17:23:29.464Z",
+          "topic": "Vocês tem agendamento"
+        },
+        {
+          "timestamp": "2025-01-05T17:23:41.879Z",
+          "topic": "Queria marcar com o lucas"
+        },
+        {
+          "timestamp": "2025-01-05T17:24:02.415Z",
+          "topic": "Essa segunda 8"
+        },
+        {
+          "timestamp": "2025-01-05T17:24:52.967Z",
+          "topic": "Arthur pode usar esse numero"
+        },
+        {
+          "timestamp": "2025-01-05T17:41:22.565Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T17:43:07.762Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T17:45:31.067Z",
+          "topic": "Oi"
+        }
+      ],
+      "adminNotes": [],
+      "context": {},
+      "conversationFlow": {
+        "currentStep": "confirming"
+      }
+    }
+  }
+}
