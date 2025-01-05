@@ -23,7 +23,14 @@ const start = async () => {
 	// WhatsApp Client
 	const client = new Client({
 		puppeteer: {
-			args: ["--no-sandbox"]
+			args: [
+				"--no-sandbox",
+				"--disable-setuid-sandbox",
+				"--disable-web-security",
+				"--allow-running-insecure-content",
+				"--disable-features=IsolateOrigins,site-per-process"
+			],
+			headless: false
 		},
 		authStrategy: new LocalAuth({
 			dataPath: constants.sessionPath

@@ -27,12 +27,14 @@ const handleMessageGPT = async (message: Message, prompt: string) => {
 		const lastConversationId = conversations[message.from];
 
 		cli.print(`[GPT] Received prompt from ${message.from}: ${prompt}`);
+		console.log("[DEBUG] Message object:", JSON.stringify(message, null, 2));
 
 		// Prompt Moderation
 		if (config.promptModerationEnabled) {
 			try {
 				await moderateIncomingPrompt(prompt);
 			} catch (error: any) {
+				console.log("[DEBUG] Moderation error:", error);
 				message.reply(error.message);
 				return;
 			}
@@ -42,7 +44,11 @@ const handleMessageGPT = async (message: Message, prompt: string) => {
 
 		// Check if we have a conversation with the user
 		let response: ChatMessage;
+		console.log("[DEBUG] Using model:", config.openAIModel);
+		console.log("[DEBUG] API Key length:", getConfig("gpt", "apiKey")?.length || 0);
+		
 		if (lastConversationId) {
+			console.log("[DEBUG] Continuing conversation:", lastConversationId);
 			// Handle message with previous conversation
 			response = await chatgpt.sendMessage(prompt, {
 				parentMessageId: lastConversationId
@@ -56,12 +62,15 @@ const handleMessageGPT = async (message: Message, prompt: string) => {
 				promptBuilder += prompt + "\n\n";
 			}
 
+			console.log("[DEBUG] Starting new conversation with prompt:", promptBuilder || prompt);
 			// Handle message with new conversation
-			response = await chatgpt.sendMessage(promptBuilder);
+			response = await chatgpt.sendMessage(promptBuilder || prompt);
 
 			cli.print(`[GPT] New conversation for ${message.from} (ID: ${response.id})`);
 		}
 		
+		console.log("[DEBUG] Raw API response:", JSON.stringify(response, null, 2));
+
 		// Set conversation id
 		conversations[message.from] = response.id;
 
