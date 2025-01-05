@@ -6,40 +6,44 @@
       "isAdmin": false,
       "topics": [
         {
-          "timestamp": "2025-01-05T17:20:16.182Z",
-          "topic": "oi tudo bem"
-        },
-        {
-          "timestamp": "2025-01-05T17:20:31.192Z",
-          "topic": "queria marcar um horario para o lucas"
-        },
-        {
-          "timestamp": "2025-01-05T17:25:32.145Z",
-          "topic": "Oi ana"
-        },
-        {
-          "timestamp": "2025-01-05T17:25:47.087Z",
-          "topic": "Voce sabe quem esta falando eh seu chefe ou nao"
-        },
-        {
-          "timestamp": "2025-01-05T17:27:20.480Z",
+          "timestamp": "2025-01-05T17:48:55.084Z",
           "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:38:35.263Z",
+          "timestamp": "2025-01-05T17:51:08.953Z",
+          "topic": "Td bem"
+        },
+        {
+          "timestamp": "2025-01-05T17:53:18.277Z",
+          "topic": "Td bem"
+        },
+        {
+          "timestamp": "2025-01-05T17:55:48.679Z",
+          "topic": "Td bem"
+        },
+        {
+          "timestamp": "2025-01-05T18:11:48.921Z",
           "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:41:29.813Z",
-          "topic": "Hello"
+          "timestamp": "2025-01-05T18:12:15.673Z",
+          "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:43:18.470Z",
-          "topic": "Oi tudo bem"
+          "timestamp": "2025-01-05T18:14:40.938Z",
+          "topic": "Td bem"
         },
         {
-          "timestamp": "2025-01-05T17:45:41.650Z",
-          "topic": "tudo bem?"
+          "timestamp": "2025-01-05T18:19:12.920Z",
+          "topic": "Tem dim"
+        },
+        {
+          "timestamp": "2025-01-05T18:19:33.233Z",
+          "topic": "Chgaaave"
+        },
+        {
+          "timestamp": "2025-01-05T18:25:19.098Z",
+          "topic": "Oi"
         }
       ],
       "adminNotes": [],
@@ -52,40 +56,90 @@
       "isAdmin": false,
       "topics": [
         {
-          "timestamp": "2025-01-05T17:22:35.486Z",
+          "timestamp": "2025-01-05T17:53:08.552Z",
           "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:22:49.688Z",
-          "topic": "Você eh lindo"
-        },
-        {
-          "timestamp": "2025-01-05T17:23:29.464Z",
-          "topic": "Vocês tem agendamento"
-        },
-        {
-          "timestamp": "2025-01-05T17:23:41.879Z",
-          "topic": "Queria marcar com o lucas"
-        },
-        {
-          "timestamp": "2025-01-05T17:24:02.415Z",
-          "topic": "Essa segunda 8"
-        },
-        {
-          "timestamp": "2025-01-05T17:24:52.967Z",
-          "topic": "Arthur pode usar esse numero"
-        },
-        {
-          "timestamp": "2025-01-05T17:41:22.565Z",
+          "timestamp": "2025-01-05T17:55:35.391Z",
           "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:43:07.762Z",
+          "timestamp": "2025-01-05T18:11:37.894Z",
           "topic": "Oi"
         },
         {
-          "timestamp": "2025-01-05T17:45:31.067Z",
+          "timestamp": "2025-01-05T18:14:33.199Z",
           "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T18:18:32.854Z",
+          "topic": "Ou"
+        },
+        {
+          "timestamp": "2025-01-05T18:18:50.809Z",
+          "topic": "Quando eu marquei mesmo a consulta"
+        },
+        {
+          "timestamp": "2025-01-05T18:25:10.882Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T18:35:12.579Z",
+          "topic": "Oi"
+        },
+        {
+          "timestamp": "2025-01-05T18:36:49.677Z",
+          "topic": "Ott"
+        },
+        {
+          "timestamp": "2025-01-05T18:45:29.456Z",
+          "topic": "Oi"
+        }
+      ],
+      "adminNotes": [],
+      "context": {},
+      "conversationFlow": {
+        "currentStep": "confirming"
+      }
+    },
+    "558591173919@c.us": {
+      "phone": "558591173919@c.us",
+      "lastInteraction": "2025-01-05T18:37:50.705Z",
+      "isAdmin": false,
+      "topics": [
+        {
+          "timestamp": "2025-01-05T18:37:50.723Z",
+          "topic": "eeei amigo"
+        }
+      ],
+      "adminNotes": [],
+      "context": {},
+      "conversationFlow": {}
+    },
+    "558596353817@c.us": {
+      "phone": "558596353817@c.us",
+      "lastInteraction": "2025-01-05T18:49:39.398Z",
+      "isAdmin": false,
+      "topics": [
+        {
+          "timestamp": "2025-01-05T18:49:39.428Z",
+          "topic": "Ou na sexta noite, algo assim"
+        },
+        {
+          "timestamp": "2025-01-05T18:50:24.263Z",
+          "topic": "Qual horário ele pode?"
+        },
+        {
+          "timestamp": "2025-01-05T18:50:27.147Z",
+          "topic": "Lucas*"
+        },
+        {
+          "timestamp": "2025-01-05T18:50:48.820Z",
+          "topic": "Sexta às 9hrs estaria bom"
+        },
+        {
+          "timestamp": "2025-01-05T18:51:16.597Z",
+          "topic": "Bruce Benner"
         }
       ],
       "adminNotes": [],

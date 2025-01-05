@@ -1,6 +1,5 @@
 import qrcode from "qrcode";
 import { Client, Message, Events, LocalAuth } from "whatsapp-web.js";
-import readline from 'readline';
 
 // Constants
 import constants from "./constants";
@@ -13,41 +12,8 @@ import { handleIncomingMessage } from "./handlers/message";
 import { initAiConfig } from "./handlers/ai-config";
 import { initOpenAI } from "./providers/openai";
 
-// Create interface for terminal input
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
-
 // Ready timestamp of the bot
-export let botReadyTimestamp: Date | null = null;
-
-// Handle terminal input
-function setupTerminalInput() {
-	rl.on('line', async (input) => {
-		if (input.trim()) {
-			// Criar um objeto Message simulado para entrada do terminal
-			const terminalMessage = {
-				from: 'sudo@master',
-				to: 'terminal',
-				body: input,
-				hasMedia: false,
-				timestamp: Date.now(),
-				fromMe: true,
-				hasQuotedMsg: false,
-				getChat: async () => ({ isGroup: false }),
-				reply: (text: string) => {
-					console.log('\n[RESPOSTA]:', text, '\n> ');
-					return Promise.resolve();
-				}
-			};
-
-			// Processar a mensagem
-			await handleIncomingMessage(terminalMessage as any);
-		}
-		process.stdout.write('> ');
-	});
-}
+let botReadyTimestamp: Date | null = null;
 
 // Entrypoint
 const start = async () => {
@@ -118,20 +84,31 @@ const start = async () => {
 		// Set bot ready timestamp
 		botReadyTimestamp = new Date();
 
-		// Setup terminal input
-		setupTerminalInput();
-
 		initAiConfig();
 		initOpenAI();
 	});
 
 	// WhatsApp message
 	client.on(Events.MESSAGE_RECEIVED, async (message: any) => {
+		// Debug log para entender o fluxo da mensagem
+		console.log('\n[DEBUG] Nova mensagem recebida:', {
+			de: message.from,
+			para: message.to,
+			conteudo: message.body
+		});
+
 		// Ignore if message is from status broadcast
 		if (message.from == constants.statusBroadcast) return;
 
 		// Ignore if it's a quoted message, (e.g. Bot reply)
 		if (message.hasQuotedMsg) return;
+
+		// Bloqueia APENAS mensagens que vierem DO número da Ana e não tiverem @ana
+		const isFromAna = message.from === process.env.WHATSAPP_NUMBER_ANA;
+		if (isFromAna && !message.body.toLowerCase().includes('@ana')) {
+			cli.print(`[ANA] Bloqueando mensagem sem @ana do número ${message.from}`);
+			return;
+		}
 
 		await handleIncomingMessage(message);
 	});
@@ -147,6 +124,13 @@ const start = async () => {
 		// Ignore if it's not from me
 		if (!message.fromMe) return;
 
+		// Bloqueia APENAS mensagens manuais do número da Ana que não tem @ana
+		const isFromAna = message.from === process.env.WHATSAPP_NUMBER_ANA;
+		if (isFromAna && !message.body.toLowerCase().includes('@ana')) {
+			cli.print(`[ANA] Bloqueando mensagem manual sem @ana do número ${message.from}`);
+			return;
+		}
+
 		await handleIncomingMessage(message);
 	});
 
@@ -155,3 +139,5 @@ const start = async () => {
 };
 
 start();
+
+export { botReadyTimestamp };

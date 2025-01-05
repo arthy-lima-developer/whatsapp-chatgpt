@@ -28,28 +28,81 @@ import { botReadyTimestamp } from "../index";
 async function handleIncomingMessage(message: Message) {
 	let messageString = message.body;
 
-	// Verifica se a mensagem está relacionada ao número da Ana de alguma forma
-	const isAnaNumber = message.from === process.env.WHATSAPP_NUMBER_ANA;
-	const isManualFromAna = message.fromMe && (message.from === process.env.WHATSAPP_NUMBER_ANA || message.to === process.env.WHATSAPP_NUMBER_ANA);
+	// DEBUG: Log inicial da mensagem recebida
+	console.log('\n[DEBUG] Nova mensagem recebida:', {
+		de: message.from,
+		para: message.to,
+		conteudo: messageString,
+		ehManual: message.fromMe,
+		temCitacao: message.hasQuotedMsg,
+		timestamp: new Date().toISOString()
+	});
 
-	// Se for uma mensagem manual do número da Ana, ignora completamente
-	if (isManualFromAna) {
-		cli.print(`[NÚMERO DA ANA] Mensagem enviada manualmente por um humano usando o número: ${messageString}`);
-		return;
+	// PRIMEIRO: Se estiver em modo sandbox, verifica se o número está permitido
+	if (process.env.AGENT_SANDBOX === 'true') {
+		const sandboxNumbers = JSON.parse(process.env.AGENT_SANDBOX_NUMBERS || '[]');
+		if (!sandboxNumbers.includes(message.from)) {
+			console.log('[DEBUG] Número bloqueado pelo sandbox:', {
+				numero: message.from,
+				numerosSandbox: sandboxNumbers,
+				razao: 'Número não está na lista de sandbox'
+			});
+			cli.print(`[SANDBOX] Bloqueando mensagem do número ${message.from} (não está no sandbox)`);
+			return;
+		}
+	}
+
+	// SEGUNDO: Verifica se é uma mensagem relacionada ao número da Ana
+	const isFromAnaNumber = message.from === process.env.WHATSAPP_NUMBER_ANA;
+
+	// Se for uma mensagem manual do número da Ana, verifica se tem @ana
+	if (isFromAnaNumber && message.fromMe) {
+		const hasAnaTag = messageString.toLowerCase().includes('@ana');
+		console.log('[DEBUG] Mensagem manual detectada:', {
+			razao: 'Mensagem enviada manualmente usando o número da Ana',
+			temTag: hasAnaTag,
+			conteudo: messageString,
+			ehManual: message.fromMe,
+			numeroOrigem: message.from
+		});
+
+		if (!hasAnaTag) {
+			cli.print(`[ANA] Mensagem manual sem @ana ignorada: ${messageString}`);
+			return;
+		}
+		cli.print(`[ANA] Processando mensagem manual com @ana: ${messageString}`);
 	}
 
 	// Se for uma mensagem do número da Ana (não manual), precisa do @ana
-	if (isAnaNumber) {
-		if (!messageString.toLowerCase().includes('@ana')) {
-			cli.print(`[NÚMERO DA ANA] Mensagem recebida sem @ana (ignorando): ${messageString}`);
+	if (isFromAnaNumber && !message.fromMe) {
+		const hasAnaTag = messageString.toLowerCase().includes('@ana');
+		console.log('[DEBUG] Verificação tag @ana:', {
+			temTag: hasAnaTag,
+			conteudo: messageString,
+			ehDaAna: true,
+			acao: hasAnaTag ? 'Processando mensagem' : 'Ignorando mensagem'
+		});
+
+		if (!hasAnaTag) {
+			cli.print(`[ANA] Mensagem sem @ana ignorada: ${messageString}`);
 			return;
 		}
-		cli.print(`[ANA BOT] Mensagem recebida com @ana (processando): ${messageString}`);
-		messageString = messageString.replace(/@ana/gi, '').trim();
+		cli.print(`[ANA] Processando mensagem com @ana: ${messageString}`);
 	}
 
 	// Get user memory and last conversation
 	const userMemory = getUserMemory(message.from);
+	
+	// DEBUG: Log da memória do usuário
+	console.log('[DEBUG] Memória do usuário:', {
+		numero: message.from,
+		nome: userMemory.name || 'Não definido',
+		ehAdmin: userMemory.isAdmin,
+		ehNumeroAna: isFromAnaNumber,
+		ultimaInteracao: userMemory.lastInteraction,
+		contextoAtual: userMemory.context,
+		fluxoConversa: userMemory.conversationFlow
+	});
 
 	// Ignore groupchats if disabled
 	if ((await message.getChat()).isGroup && !config.groupchatsEnabled) return;

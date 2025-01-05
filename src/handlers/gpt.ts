@@ -37,18 +37,55 @@ const conversations = {};
 
 const handleMessageGPT = async (message: Message, prompt: string) => {
 	try {
+		// DEBUG: Log inicial do processamento GPT
+		console.log('\n[DEBUG] Iniciando processamento GPT:', {
+			de: message.from,
+			para: message.to,
+			prompt: prompt,
+			modelo: process.env.OPENAI_GPT_MODEL,
+			timestamp: new Date().toISOString()
+		});
+
+		// PRIMEIRO: Verifica se é uma mensagem relacionada ao número da Ana
+		const isFromAnaNumber = message.from === process.env.WHATSAPP_NUMBER_ANA;
+
+		// Se for do número da Ana, PRECISA ter @ana
+		if (isFromAnaNumber) {
+			if (!prompt.toLowerCase().includes('@ana')) {
+				console.log('[DEBUG] Bloqueando processamento:', {
+					razao: 'Mensagem do número da Ana sem @ana',
+					prompt: prompt,
+					ehDaAna: true
+				});
+				cli.print(`[ANA] Bloqueando processamento GPT de mensagem sem @ana`);
+				return;
+			}
+			// Remove o @ana antes de processar
+			prompt = prompt.replace(/@ana/gi, '').trim();
+			console.log('[DEBUG] Prompt processado:', {
+				original: prompt,
+				semTag: prompt,
+				acao: 'Tag @ana removida',
+				ehDaAna: true
+			});
+			cli.print(`[ANA] Processando mensagem com @ana: ${prompt}`);
+		}
+
 		// Clean up expired confirmations
-		cleanupExpiredConfirmations();
+			cleanupExpiredConfirmations();
 
 		// Get user memory and last conversation
 		const userMemory = getUserMemory(message.from);
 		const lastConversationId = conversations[message.from];
 
-		// Verifica se é uma mensagem do número da Ana sem @ana
-		if (message.from === process.env.WHATSAPP_NUMBER_ANA && !prompt.toLowerCase().includes('@ana')) {
-			cli.print(`[NÚMERO DA ANA] Ignorando processamento GPT de mensagem sem @ana`);
-			return;
-		}
+		// DEBUG: Log do contexto da conversa
+		console.log('[DEBUG] Contexto da conversa:', {
+			usuario: message.from,
+			ultimaConversa: lastConversationId || 'Nova conversa',
+			memoria: userMemory,
+			ehAdmin: userMemory.isAdmin,
+			fluxoAtual: userMemory.conversationFlow.currentStep || 'Inicial'
+		});
 
 		// Log modelo e detalhes da mensagem
 		cli.print(`[GPT] Modelo em uso: ${process.env.OPENAI_GPT_MODEL}`);
@@ -269,6 +306,28 @@ const handleMessageGPT = async (message: Message, prompt: string) => {
 
 		const end = Date.now() - start;
 
+		// DEBUG: Log do resultado do processamento
+		console.log('\n[DEBUG] Resultado do processamento:', {
+			usuario: message.from,
+			tempoProcessamento: end + 'ms',
+			tamanhoResposta: response.text.length,
+			modeloUsado: process.env.OPENAI_GPT_MODEL,
+			idConversa: response.id,
+			ehAdmin: userMemory.isAdmin
+		});
+
+		// DEBUG: Log do fluxo da conversa
+		console.log('[DEBUG] Análise do fluxo:', {
+			conteudoResposta: response.text,
+			fluxoAnterior: userMemory.conversationFlow.currentStep || 'Inicial',
+			indicadoresDetetados: {
+				escolhendoMedico: response.text.toLowerCase().includes('qual médico'),
+				escolhendoData: response.text.toLowerCase().includes('qual data'),
+				escolhendoHora: response.text.toLowerCase().includes('qual horário'),
+				confirmando: response.text.toLowerCase().includes('confirma')
+			}
+		});
+
 		cli.print(`[GPT] Resposta para ${message.from}:`);
 		cli.print(`[GPT] Modelo: ${process.env.OPENAI_GPT_MODEL}`);
 		cli.print(`[GPT] Tempo de resposta: ${end}ms`);
@@ -280,8 +339,19 @@ const handleMessageGPT = async (message: Message, prompt: string) => {
 
 		// Se for mensagem do terminal, apenas mostra a resposta no console
 		if (message.from === 'sudo@master') {
+			console.log('[DEBUG] Mensagem do terminal:', {
+				acao: 'Apenas mostrando no console',
+				razao: 'Mensagem originada do terminal'
+			});
 			return;
 		}
+
+		// DEBUG: Log final
+		console.log('[DEBUG] Finalizando processamento:', {
+			usuario: message.from,
+			statusFinal: 'Sucesso',
+			proximaAcao: message.fromMe ? 'Ignorando resposta (mensagem manual)' : 'Enviando resposta'
+		});
 
 		// TTS reply (Default: disabled)
 		if (getConfig("tts", "enabled")) {
